@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <meta name="theme-color" content="#0a0a0f" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png" />
+  <link rel="apple-touch-icon" href="icons/icon-192.png" />
+  <title>Beleške — Premium 3D</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <!-- Grid pozadina -->
+  <div class="bg-grid"></div>
+  <div class="bg-ambient"></div>
+  <div class="bg-orb bg-orb-1"></div>
+  <div class="bg-orb bg-orb-2"></div>
+  <div class="bg-orb bg-orb-3"></div>
+
+  <!-- LED globalno svetlo -->
+  <div class="led-global" id="ledGlobal"></div>
+
+  <!-- Glavni app container -->
+  <div class="app">
+    <!-- Header -->
+    <header class="app-header">
+      <div class="app-title">
+        <h1 class="text-3d" id="mainTitle" data-text="Beleške">Beleške</h1>
+      </div>
+      <div class="app-actions">
+        <button class="icon-btn" id="btnAddNote" title="Nova beleška">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+        </button>
+        <button class="icon-btn" id="btnSettings" title="Podešavanja">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+        </button>
+        <button class="icon-btn" id="btnLED" title="LED sistem">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18h6M10 22h4M12 2a7 7 0 0 0-4 12.7c.5.4 1 1 1 2.3v1h6v-1c0-1.3.5-1.9 1-2.3A7 7 0 0 0 12 2z"/></svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- Glavni grid kartica -->
+    <main class="cards-grid" id="cardsGrid">
+      <!-- Kartice se dinamički generišu -->
+    </main>
+  </div>
+
+  <!-- FULLSCREEN KARTICA -->
+  <div class="card-fullscreen" id="cardFullscreen">
+    <div class="fullscreen-card" id="fullscreenCard">
+      <div class="fullscreen-header">
+        <button class="icon-btn back-btn" id="btnBack">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        </button>
+        <div class="fullscreen-actions">
+          <button class="icon-btn" id="btnCardImage" title="Dodaj sliku">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+          </button>
+          <button class="icon-btn" id="btnCardLayers" title="Slojevi">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+          </button>
+          <button class="icon-btn" id="btnCardStyle" title="3D stil kartice">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+          </button>
+          <button class="icon-btn" id="btnCardText3D" title="3D tekst">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7V4h16v3M9 20h6M12 4v16"/></svg>
+          </button>
+          <button class="icon-btn" id="btnDeleteNote" title="Obriši">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+          </button>
+        </div>
+      </div>
+      <div class="fullscreen-body" id="fullscreenBody">
+        <!-- Editor + slika -->
+      </div>
+    </div>
+  </div>
+
+  <!-- PANEL: 3D stil teksta -->
+  <div class="panel" id="panelText3D">
+    <div class="panel-header">
+      <h3>3D Tekst</h3>
+      <button class="icon-btn close-panel">×</button>
+    </div>
+    <div class="panel-body" id="text3DPanelBody"></div>
+  </div>
+
+  <!-- PANEL: 3D stil kartice -->
+  <div class="panel" id="panelCard3D">
+    <div class="panel-header">
+      <h3>3D Kartica</h3>
+      <button class="icon-btn close-panel">×</button>
+    </div>
+    <div class="panel-body" id="card3DPanelBody"></div>
+  </div>
+
+  <!-- PANEL: LED -->
+  <div class="panel" id="panelLED">
+    <div class="panel-header">
+      <h3>LED Sistem</h3>
+      <button class="icon-btn close-panel">×</button>
+    </div>
+    <div class="panel-body" id="ledPanelBody"></div>
+  </div>
+
+  <!-- PANEL: Slojevi -->
+  <div class="panel" id="panelLayers">
+    <div class="panel-header">
+      <h3>Slojevi</h3>
+      <button class="icon-btn close-panel">×</button>
+    </div>
+    <div class="panel-body" id="layersPanelBody"></div>
+  </div>
+
+  <!-- PANEL: Podešavanja -->
+  <div class="panel" id="panelSettings">
+    <div class="panel-header">
+      <h3>Podešavanja</h3>
+      <button class="icon-btn close-panel">×</button>
+    </div>
+    <div class="panel-body" id="settingsPanelBody">
+      <div class="setting-row">
+        <label>Naziv aplikacije</label>
+        <input type="text" id="appNameInput" value="Beleške" />
+      </div>
+      <div class="setting-row">
+        <label>Režim teksta naslova</label>
+        <select id="appTitleStyle">
+          <option value="glass">Glass</option>
+          <option value="crystal">Crystal</option>
+          <option value="metal">Metal</option>
+          <option value="neon">Neon</option>
+          <option value="matte">Matte</option>
+          <option value="chrome">Chrome</option>
+          <option value="premium">Premium Gloss</option>
+        </select>
+      </div>
+      <div class="setting-row">
+        <label>LED uključen</label>
+        <label class="switch">
+          <input type="checkbox" id="ledEnabled" checked />
+          <span class="slider"></span>
+        </label>
+      </div>
+      <div class="setting-row">
+        <label>Resetuj sve</label>
+        <button class="danger-btn" id="btnReset">Resetuj</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Ikonica -->
+  <div class="modal" id="iconModal">
+    <div class="modal-content glass">
+      <h3>Izaberi ikonicu</h3>
+      <div class="icon-grid" id="iconGrid"></div>
+      <button class="primary-btn close-modal">Zatvori</button>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div class="toast" id="toast"></div>
+
+  <!-- Hidden file input za slike -->
+  <input type="file" id="imageInput" accept="image/*" multiple style="display:none" />
+
+  <script src="js/db.js"></script>
+  <script src="js/editor.js"></script>
+  <script src="js/cards.js"></script>
+  <script src="js/led.js"></script>
+  <script src="js/layers.js"></script>
+  <script src="js/panels.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw/service-worker.js').catch(console.error);
+      });
+    }
+  </script>
+</body>
+</html>
